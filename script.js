@@ -316,7 +316,11 @@ function hero_anime() {
     delay: 0.3,
     duration: 0.7,
   });
-
+  gsap.to(" .page_1 p", {
+    opacity: 1,
+    duration: 2,
+    ease: "power1.inOut",
+  });
   var tl = gsap.timeline({
     scrollTrigger: {
       trigger: ".page_1 h1",
@@ -330,7 +334,7 @@ function hero_anime() {
   tl.to(
     ".page_1 h1",
     {
-      x: -100,
+      x: -80,
     },
     "Hero_animation"
   );
@@ -338,7 +342,7 @@ function hero_anime() {
   tl.to(
     ".page_1 h2",
     {
-      x: 100,   
+      x: 80,   
     },
     "Hero_animation"
   );
@@ -351,36 +355,158 @@ function hero_anime() {
     "Hero_animation"
   );
 
-  var tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".page_1 h1",
-      scroller: "main",
-      // markers:true,
-      // start: "top -115%",
-      start: "top -80%",
-      end: "top -50%",
-      scrub: 3,
-    },
-  });
+  
 
-  tl2.to("main", {
-    backgroundColor: "#fff",
-  });
+  function initScrollTriggers() { 
+    var isMobile = window.innerWidth <= 768;
 
-  var tl3 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".page_1 h1",
-      scroller: "main",
-      // markers:true,
-      start: "top -280%",
-      end: "top -300%",
-      scrub: 3,
-    },
-  });
+    // Desktop ScrollTrigger (No change)
+    if (!isMobile) {
+        var tl2 = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".page_1 h1",
+                scroller: "main",
+                start: "top -115%",  
+                end: "top -120%",    
+                scrub: 3,
+            },
+        });
 
-  tl3.to("main", {
-    backgroundColor: "#0F0D0D",
+        tl2.to("main", {
+            backgroundColor: "#fff",
+        });
+
+        var tl3 = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".page_1 h1",
+                scroller: "main",
+                start: "top -280%",
+                end: "top -300%",    
+                scrub: 3,
+            },
+        });
+
+        tl3.to("main", {
+            backgroundColor: "#0F0D0D",
+        });
+    }
+    
+    // Mobile ScrollTrigger (Earlier change)
+    else {
+        var tl2Mobile = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".page_1 h1",
+                scroller: "main",
+                start: "top -70%", 
+                end: "top -85%",    
+                scrub: 3,
+            },
+        });
+
+        tl2Mobile.to("main", {
+            backgroundColor: "#fff",
+        });
+
+        var tl3Mobile = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".page_1 h1",
+                scroller: "main",
+                start: "top -200%",
+                end: "top -220%",    
+                scrub: 3,
+            },
+        });
+
+        tl3Mobile.to("main", {
+            backgroundColor: "#0F0D0D",
+        });
+    }
+}
+
+window.addEventListener('load', initScrollTriggers);
+
+window.addEventListener('resize', function() {
+    ScrollTrigger.refresh(); 
+    initScrollTriggers();
+});
+
+
+
+  function initScrollTriggers() {
+    var isMobile = window.innerWidth <= 768; 
+  
+    // Desktop ScrollTrigger
+    if (!isMobile) {
+      var tl2 = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".page_1 h1",
+          scroller: "main",
+          start: "top -115%", 
+          end: "top -120%",   
+          scrub: 3,
+        },
+      });
+  
+      tl2.to("main", {
+        backgroundColor: "#fff",
+      });
+  
+      var tl3 = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".page_1 h1",
+          scroller: "main",
+          start: "top -280%", 
+          end: "top -300%",  
+          scrub: 3,
+        },
+      });
+  
+      tl3.to("main", {
+        backgroundColor: "#0F0D0D",
+      });
+    }
+    
+    // Mobile ScrollTrigger
+    else {
+      var tl2Mobile = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".page_1 h1",
+          scroller: "main",
+          start: "top -80%", 
+          end: "top -85%",    
+          scrub: 3,
+        },
+      });
+  
+      tl2Mobile.to("main", {
+        backgroundColor: "#fff",
+      });
+  
+      var tl3Mobile = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".page_1 h1",
+          scroller: "main",
+          start: "top -200%", 
+          end: "top -220%",  
+          scrub: 3,
+        },
+      });
+  
+      tl3Mobile.to("main", {
+        backgroundColor: "#0F0D0D",
+      });
+    }
+  }
+  
+ 
+  window.addEventListener('load', initScrollTriggers);
+  
+  
+  window.addEventListener('resize', function() {
+    ScrollTrigger.refresh(); 
+    initScrollTriggers();
   });
+  
 
   // var tl4 = gsap.timeline({
   //   ScrollTrigger: {
@@ -403,8 +529,6 @@ hero_anime();
 //++++++++++++++++++++++++++       Page_4 Animation      ++++++++++++++++++++++++++++++++
 window.addEventListener('DOMContentLoaded', () => {
   const firstImg = document.querySelector('.elem img');
-  
-  // Show the first image by default (only for mobile)
   if (firstImg && window.innerWidth <= 768) {
     firstImg.style.opacity = "0.7";
     firstImg.style.transform = "translateY(0%) rotate(0deg)";
@@ -414,7 +538,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 document.querySelectorAll('.elem').forEach((element) => {
   element.addEventListener('click', function() {
-    // Apply click behavior only for mobile devices
     if (window.innerWidth <= 600) {
       document.querySelectorAll('.elem img').forEach((img) => {
         img.style.opacity = "0";
